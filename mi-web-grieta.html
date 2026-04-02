@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gri(e)ta</title>
+
+<style>
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  background: #0A1F44;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* GRIETA */
+.crack {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 0;
+  background: #FF6A00;
+  z-index: 0;
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* TEXTO */
+#type {
+  font-size: 64px;
+  letter-spacing: 3px;
+}
+
+/* BOTÓN */
+.buy-button {
+  margin-top: 30px;
+  background: #FF6A00;
+  padding: 15px 40px;
+  border-radius: 40px;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255,106,0,0.7);}
+  70% { box-shadow: 0 0 0 20px rgba(255,106,0,0);}
+  100% { box-shadow: 0 0 0 0 rgba(255,106,0,0);}
+}
+
+/* SECCIONES */
+.section {
+  padding: 80px 20px;
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+}
+
+/* REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 1s;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* POEMAS */
+.poem {
+  margin: 40px 0;
+  font-style: italic;
+}
+
+/* AUTORA */
+.author img {
+  width: 250px;
+  border-radius: 20px;
+  filter: grayscale(100%);
+}
+
+/* RESEÑAS */
+.review {
+  background: rgba(255,255,255,0.05);
+  padding: 15px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+/* ESTRELLAS */
+.stars span {
+  font-size: 25px;
+  cursor: pointer;
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #111;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.payment-option {
+  display: block;
+  margin: 10px;
+  padding: 10px;
+  background: #FF6A00;
+  color: white;
+  text-decoration: none;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  #type { font-size: 40px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="crack"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <h1 id="type"></h1>
+  <p>Lo que callás también habla</p>
+  <div class="buy-button" onclick="openModal()">Comprar</div>
+</section>
+
+<!-- CONCEPTO -->
+<section class="section reveal">
+  <p>
+    Hay algo que se rompe.<br>
+    Y en esa ruptura, aparece la voz.<br><br>
+    No todo grita hacia afuera.<br>
+    A veces, la grieta es interna.
+  </p>
+</section>
+
+<!-- POEMAS -->
+<section class="section reveal">
+  <div class="poem">El eco de lo que no dije sigue viviendo en mí.</div>
+  <div class="poem">Callar también es una forma de romperse.</div>
+</section>
+
+<!-- AUTORA -->
+<section class="section author reveal">
+  <img src="grieta86.png">
+  <p>
+    Martina Cejas es licenciada en Educación Inicial y creadora de proyectos tecnológicos y educativos destinados a las infancias. 
+    Su trabajo combina la pedagogía, la creatividad y la innovación, con una fuerte sensibilidad por los procesos emocionales y expresivos. 
+    En la escritura encuentra un espacio íntimo de exploración, donde la palabra se vuelve refugio y pregunta. 
+    Gri(e)ta es su primer libro de prosa poética y da inicio a un universo literario atravesado por la vulnerabilidad, la identidad y la voz propia.
+  </p>
+</section>
+
+<!-- RESEÑAS -->
+<section class="section reveal">
+  <h2>Reseñas</h2>
+
+  <div class="stars">
+    <span onclick="rate(1)">★</span>
+    <span onclick="rate(2)">★</span>
+    <span onclick="rate(3)">★</span>
+    <span onclick="rate(4)">★</span>
+    <span onclick="rate(5)">★</span>
+  </div>
+
+  <p id="rating-msg"></p>
+
+  <textarea id="reviewInput" placeholder="Escribí lo que te dejó Gri(e)ta..."></textarea><br>
+  <button onclick="addReview()">Enviar</button>
+
+  <div id="reviewsContainer"></div>
+</section>
+
+<!-- UBICACIÓN -->
+<section class="section reveal">
+  <p>Ubicación del vendedor: San Francisco</p>
+</section>
+
+<!-- FOOTER -->
+<footer class="section">
+  <p>Instagram: @grieta.proyecto</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>Elegí cómo habitar Gri(e)ta</h3>
+    <p>Pago seguro • Acceso inmediato</p>
+
+    <a href="https://link.mercadopago.com.ar/tu-link" target="_blank" class="payment-option">Mercado Pago</a>
+    <a href="https://link.mercadopago.com.ar/tu-link" target="_blank" class="payment-option">Tarjetas</a>
+
+    <br>
+    <button onclick="closeModal()">Cerrar</button>
+  </div>
+</div>
+
+<!-- AUDIO -->
+<audio id="sound" src="https://www.soundjay.com/ambient/soft-ambience.mp3"></audio>
+
+<script>
+// GRIETA
+window.addEventListener("scroll", () => {
+  document.querySelector(".crack").style.height = window.scrollY + "px";
+});
+
+// TEXTO
+const text = "Gri(e)ta";
+let i = 0;
+function typing(){
+  if(i < text.length){
+    document.getElementById("type").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typing, 120);
+  }
+}
+typing();
+
+// REVEAL
+window.addEventListener("scroll", () => {
+  document.querySelectorAll(".reveal").forEach(el => {
+    if(el.getBoundingClientRect().top < window.innerHeight - 100){
+      el.classList.add("active");
+    }
+  });
+});
+
+// MODAL
+function openModal(){
+  document.getElementById("modal").style.display = "flex";
+}
+function closeModal(){
+  document.getElementById("modal").style.display = "none";
+}
+
+// ESTRELLAS
+function rate(n){
+  document.getElementById("rating-msg").innerText = "Gracias por tu valoración de " + n + " estrellas";
+}
+
+// RESEÑAS
+function addReview(){
+  const text = document.getElementById("reviewInput").value;
+  if(text.trim() === "") return;
+  const div = document.createElement("div");
+  div.className = "review";
+  div.innerText = text;
+  document.getElementById("reviewsContainer").appendChild(div);
+  document.getElementById("reviewInput").value = "";
+}
+
+// SONIDO
+document.body.addEventListener("click", () => {
+  document.getElementById("sound").play();
+}, { once: true });
+</script>
+
+</body>
+</html>
